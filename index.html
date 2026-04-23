@@ -1,504 +1,429 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YES Club | Young Educators' Society</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-:root {
-    --primary: #0652dd;
-    --secondary: #ea2027;
-    --glass: rgba(255,255,255,0.08);
-    --border: rgba(255,255,255,0.15);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    background: #0b1220;
-    color: white;
-    overflow-x: hidden;
-}
-
-/* ================= CINEMATIC BACKGROUND LAYER ================= */
-body::before{
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background: radial-gradient(circle at 20% 20%, rgba(79,140,255,0.15), transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(234,32,39,0.15), transparent 40%);
-    z-index:-3;
-    animation: floatBG 12s ease-in-out infinite alternate;
-}
-
-@keyframes floatBG{
-    0%{transform: scale(1) translateY(0);}
-    100%{transform: scale(1.1) translateY(-20px);}
-}
-
-/* subtle noise layer */
-body::after{
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background-image: url("https://www.transparenttextures.com/patterns/noise.png");
-    opacity:0.05;
-    z-index:-2;
-}
-
-/* ================= NAV ================= */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-
-    backdrop-filter: blur(18px);
-    background: rgba(255,255,255,0.05);
-    border-bottom: 1px solid var(--border);
-    transition: 0.3s ease;
-}
-
-nav.shrink {
-    padding: 0.5rem 2rem;
-    background: rgba(10,10,20,0.75);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-/* LOGO */
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo-container img {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-}
-
-/* NAV LINKS */
-.nav-links {
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    opacity: 0.8;
-    transition: 0.3s;
-}
-
-.nav-links a:hover {
-    opacity: 1;
-}
-
-/* HAMBURGER */
-.hamburger {
-    display: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-}
-
-/* ================= HERO CINEMATIC ================= */
-.hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-}
-
-/* VIDEO DEPTH */
-.hero video {
-    position: absolute;
-    width: 110%;
-    height: 110%;
-    object-fit: cover;
-    transform: scale(1.05);
-    filter: brightness(0.6);
-    animation: heroZoom 20s infinite alternate ease-in-out;
-    z-index: -4;
-}
-
-@keyframes heroZoom{
-    0%{transform: scale(1.05);}
-    100%{transform: scale(1.15);}
-}
-
-/* DARK OVERLAY */
-.hero::before {
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-    background: radial-gradient(circle at center, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
-    z-index:-3;
-}
-
-/* FLOATING ORBS */
-.hero::after{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:
-        radial-gradient(circle at 30% 40%, rgba(79,140,255,0.25), transparent 30%),
-        radial-gradient(circle at 70% 60%, rgba(234,32,39,0.2), transparent 30%);
-    z-index:-2;
-    animation: floatOrbs 10s infinite alternate ease-in-out;
-}
-
-@keyframes floatOrbs{
-    0%{transform: translateY(0);}
-    100%{transform: translateY(-20px);}
-}
-
-/* HERO CONTENT */
-.hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.hero-logo {
-    width: 210px;
-    height: 210px;
-    object-fit: contain;
-    margin-bottom: 15px;
-    animation: fadeUp 1s ease;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    animation: fadeUp 1.2s ease;
-}
-
-.hero p {
-    margin: 1rem 0 2rem;
-    max-width: 600px;
-    animation: fadeUp 1.4s ease;
-}
-
-@keyframes fadeUp{
-    from{opacity:0; transform: translateY(30px);}
-    to{opacity:1; transform: translateY(0);}
-}
-
-/* BUTTON */
-.btn {
-    padding: 0.8rem 2rem;
-    background: linear-gradient(45deg,#4f8cff,#6a5cff);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-.btn:hover{
-    transform: scale(1.05);
-}
-
-/* ================= SECTIONS ================= */
-section {
-    padding: 80px 10%;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-}
-
-section.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-}
-
-/* ================= CINEMATIC NEWS ================= */
-
-.news-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-    gap: 2.5rem;
-    perspective: 1000px;
-}
-
-/* CARD */
-.news-card {
-    position: relative;
-    border-radius: 18px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(12px);
-    transform: rotate(-6deg) scale(0.95);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-.news-card:hover {
-    transform: rotate(0deg) scale(1.05);
-}
-
-/* IMAGE */
-.news-card img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    filter: grayscale(100%) contrast(1.1);
-    transition: all 0.6s ease;
-}
-
-.news-card:hover img {
-    filter: grayscale(0%) contrast(1);
-}
-
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: rgba(255,255,255,0.05);
-    color: #aaa;
-}
-
-/* LIGHTBOX */
-.lightbox {
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.9);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-}
-
-.lightbox img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 10px;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-    .nav-links {
-        position: absolute;
-        top: 70px;
-        right: 0;
-        background: rgba(0,0,0,0.9);
-        flex-direction: column;
-        width: 200px;
-        padding: 1rem;
-        display: none;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .hamburger {
-        display: block;
-    }
-}
-
-/* ===================== ADDED ONLY (NO REMOVAL) ===================== */
-
-/* ABOUT BOX */
-.about-box{
-    margin-top:20px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 25px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    line-height: 1.8;
-}
-
-/* MISSION/VISION CONTAINERS */
-.mv-container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:20px;
-    margin-top:20px;
-}
-
-.mv-box{
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 25px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    transition:0.3s;
-}
-
-.mv-box:hover{
-    transform: translateY(-5px);
-    background: rgba(255,255,255,0.1);
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YES Club | Young Educators’ Society</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        /* University Theme Colors */
+        .bg-uni-green { background-color: #064e3b; } /* Deep Forest Green */
+        .text-uni-green { color: #064e3b; }
+        .bg-uni-gold { background-color: #fbbf24; } /* Rich Gold */
+        .text-uni-gold { color: #fbbf24; }
+        .border-uni-gold { border-color: #fbbf24; }
+        
+        .hero-gradient { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; box-shadow: 0 10px 20px -5px rgba(6, 78, 59, 0.2); }
+    </style>
 </head>
+<body class="bg-gray-50 text-gray-800">
 
-<body>
+    <nav class="fixed w-full z-50 glass-nav border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+            
+            <div class="flex items-center gap-3">
+                <!-- LOGO IMAGE -->
+                <img src="Assets/Images/logo.png" alt="YES Club Logo" 
+                     class="w-10 h-10 object-contain">
 
-<nav id="navbar">
+                <!-- TEXT -->
+                <span class="text-2xl font-bold tracking-tight text-uni-green">
+                    YES <span class="text-yellow-600">CLUB</span>
+                </span>
+            </div>
 
-    <div class="logo-container">
-        <img src="Assets/Images/logo.png">
-        <div>YES Club</div>
+            <div class="hidden md:flex items-center space-x-8 font-semibold">
+                <a href="#about" class="text-gray-700 hover:text-uni-green transition">About</a>
+                <a href="#benefits" class="text-gray-700 hover:text-uni-green transition">Benefits</a>
+                <a href="#programs" class="text-gray-700 hover:text-uni-green transition">Programs</a>
+                <a href="#apply" class="bg-uni-gold text-uni-green px-6 py-2.5 rounded-full font-bold hover:bg-yellow-500 transition shadow-md">
+                    Join YES Club
+                </a>
+            </div>
+
+        </div>
     </div>
-
-    <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="#about">About</a>
-        <a href="#news">News</a>
-        <a href="contact-us.html">Contact</a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-    <video autoplay muted loop>
-        <source src="Assets/video/NDMU.mp4">
-    </video>
-
-    <div class="hero-content">
-        <img src="Assets/Images/logo.png" class="hero-logo">
-        <h1>Young Educators' Society</h1>
-        <p>Empowering future educators through leadership and service.</p>
-        <a class="btn" href="#news">Explore News</a>
-    </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-    <h2 class="section-title">About</h2>
-
-    <div class="about-box">
-        Be a Jack of All Trades and open doors to endless job opportunities. In schools, learning centers, NGOs, even abroad! With BEED, you’re not just trained to teach, you’re trained to adapt, lead, and inspire in any learning environment. The Bachelor of Elementary Education is your path to becoming a person with passion, love, and enthusiasm towards building a foundation for learners of society. With the aim to produce a fully equipped, goal-oriented, and a 21st century skilled elementary teachers, this program, together with the Young Educator's Society Club, will truly help in you grasping your personal goal towards reality. Choose BEED and be one of the YES Club family. Here, we learn to nurture young minds, to touch their hearts, and start to transform their lives.
-    </div>
-</section>
-
-<!-- MISSION -->
-<section id="mission">
-    <h2 class="section-title">Mission & Vision</h2>
-
-    <!-- ADDED PROPER UI BOXES -->
-    <div class="mv-container">
-
-        <div class="mv-box">
-            <h3>Mission</h3>
-            <p>
-                The mission of The Young Educator’s Society (YES Club) is to enhance the knowledge and skills of its members to support their personal and professional growth, awaken their awareness of community needs, and encourage them to actively respond to these needs. It also aims to strengthen relationships among members by promoting camaraderie, service, solidarity, and teamwork among college students. Furthermore, the organization seeks to mold its members into competent and well-equipped future teachers with the necessary knowledge and expertise in the field of education. Ultimately, it endeavors to develop individuals who are not only aware of community concerns but are also capable of designing and implementing appropriate activities to address these needs.
-            </p>
+    <section class="pt-32 pb-24 hero-gradient text-white overflow-hidden relative">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <svg width="100%" height="100%"><pattern id="pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="white"/></pattern><rect width="100%" height="100%" fill="url(#pattern)"/></svg>
         </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 space-y-8">
+                <div class="inline-block px-4 py-1.5 bg-white/10 rounded-full border border-white/20 text-uni-gold font-medium text-sm">
+                    ✨ Excellence in Education
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                    Empowering Future <span class="text-uni-gold underline decoration-white/20">Educators</span> to Lead
+                </h1>
+                <p class="text-lg text-emerald-50 opacity-90 max-w-lg">
+                    Join the premier organization dedicated to developing pedagogical leadership and community impact within the university.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#apply" class="bg-uni-gold text-uni-green px-8 py-4 rounded-xl font-bold text-center hover:bg-yellow-500 transition shadow-xl text-lg">Apply for Membership</a>
+                    <a href="#about" class="border-2 border-white/30 hover:bg-white/10 px-8 py-4 rounded-xl font-bold text-center transition">Explore Programs</a>
+                </div>
+                <div class="pt-8 flex gap-10 border-t border-white/20">
+                    <div><p class="text-3xl font-bold text-uni-gold">500+</p><p class="text-xs uppercase tracking-widest text-emerald-200">Members</p></div>
+                    <div><p class="text-3xl font-bold text-uni-gold">25+</p><p class="text-xs uppercase tracking-widest text-emerald-200">Outreach Trips</p></div>
+                    <div><p class="text-3xl font-bold text-uni-gold">100%</p><p class="text-xs uppercase tracking-widest text-emerald-200">Support</p></div>
+                </div>
+            </div>
+            <div class="md:w-1/2 mt-16 md:mt-0 flex justify-center relative group">
 
-        <div class="mv-box">
-            <h3>Vision</h3>
-            <p>
-                To Advance the Bachelor of Elementary Education (BEED)students, to manifest the charism of St. Marcellin Champagnat and the ideals of true Notre Damean.
-            </p>
-        </div>
+    <!-- Glow background -->
+    <div class="w-80 h-80 bg-uni-gold/20 rounded-full absolute blur-3xl animate-pulse
+                transition-transform duration-500 group-hover:scale-110"></div>
+
+    <!-- MEDIA WRAPPER (image + video together) -->
+    <div class="relative z-10 transition-transform duration-500 ease-out
+                group-hover:scale-110">
+
+        <!-- IMAGE (fallback while video loads) -->
+        <img id="heroImage"
+            src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800"
+            alt="Students"
+            class="rounded-3xl shadow-2xl border-8 border-white/5 rotate-2 transition-opacity duration-500">
+
+        <!-- VIDEO (hidden at first) -->
+        <video id="heroVideo"
+            class="hidden rounded-3xl shadow-2xl border-8 border-white/5 rotate-2 transition-opacity duration-500"
+            autoplay
+            muted
+            loop
+            playsinline>
+            <source src="Assets/Video/NDMU.mp4" type="video/mp4">
+        </video>
 
     </div>
-</section>
-
-<!-- NEWS -->
-<section id="news">
-    <h2 class="section-title">News</h2>
-    <div class="news-container" id="newsContainer"></div>
-</section>
-
-<footer>
-    <p>&copy; 2026 YES Club</p>
-</footer>
-
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <img id="lightboxImg">
 </div>
 
 <script>
+    const video = document.getElementById('heroVideo');
+    const image = document.getElementById('heroImage');
 
-/* NEWS */
-const newsData = [
-{title:"Community Outreach in Action",img:"Assets/Images/1.jpg",text:"Members of the Young Educators Society Club actively engage in an outreach program."},
-{title:"YES Club Official Poster",img:"Assets/Images/2.jpg",text:"Official poster of the YES Club."},
-{title:"YES Club Members Giving Back",img:"Assets/Images/3.jpg",text:"Service and community engagement."}
-];
+    video.addEventListener('canplaythrough', () => {
+        video.classList.remove('hidden');
+        video.classList.add('opacity-0');
 
-const container = document.getElementById("newsContainer");
+        setTimeout(() => {
+            video.classList.add('opacity-100');
+            video.classList.remove('opacity-0');
+            image.classList.add('opacity-0');
+        }, 50);
 
-newsData.forEach(n=>{
-    const card=document.createElement("div");
-    card.className="news-card";
-    card.innerHTML=`
-        <img src="${n.img}" onclick="openLightbox(this)">
-        <div style="padding:1rem;">
-            <h4>${n.title}</h4>
-            <p>${n.text}</p>
-        </div>`;
-    container.appendChild(card);
-});
-
-/* LIGHTBOX */
-function openLightbox(img){
-    document.getElementById("lightbox").style.display="flex";
-    document.getElementById("lightboxImg").src=img.src;
-}
-function closeLightbox(){
-    document.getElementById("lightbox").style.display="none";
-}
-
-/* MENU */
-function toggleMenu(){
-    document.getElementById("navLinks").classList.toggle("active");
-}
-
-/* NAV SHRINK */
-window.addEventListener("scroll",()=>{
-    document.getElementById("navbar").classList.toggle("shrink",window.scrollY>50);
-});
-
-/* SECTION REVEAL */
-const sections=document.querySelectorAll("section");
-const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add("show");
-        }
+        setTimeout(() => {
+            image.classList.add('hidden');
+        }, 500);
     });
-},{threshold:0.1});
+</script>
+        </div>
+    </section>
 
-sections.forEach(sec=>observer.observe(sec));
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-uni-green mb-8">Our Mission & Vision</h2>
+            <p class="text-xl text-gray-600 leading-relaxed font-light mb-12">
+                The Young Educator’s Society (YES Club) is committed to advancing Bachelor of Elementary Education (BEED) students by enhancing their knowledge, skills, and professional competence as future educators. Guided by the charism of St. Marcellin Champagnat and the ideals of a true Notre Damean, the organization fosters personal growth, camaraderie, service, solidarity, and teamwork among its members. It seeks to develop socially aware individuals who are responsive to community needs and capable of designing and implementing meaningful educational and outreach activities, ultimately shaping well-equipped, compassionate, and dedicated teachers for the future.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl bg-emerald-50 border border-emerald-100">
+                    <div class="bg-uni-green w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-uni-gold">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <h3 class="font-bold text-uni-green mb-2">Goal</h3>
+                    <p class="text-sm text-gray-600">To bridge classroom theory with hands-on teaching practice.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-emerald-50 border border-emerald-100">
+                    <div class="bg-uni-green w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-uni-gold">
+                        <i data-lucide="heart"></i>
+                    </div>
+                    <h3 class="font-bold text-uni-green mb-2">Passion</h3>
+                    <p class="text-sm text-gray-600">Fostering a genuine love for mentorship and student growth.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-emerald-50 border border-emerald-100">
+                    <div class="bg-uni-green w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-uni-gold">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="font-bold text-uni-green mb-2">Integrity</h3>
+                    <p class="text-sm text-gray-600">Upholding the highest standards of the teaching profession.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="benefits" class="py-24 bg-emerald-950 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Why Join the <span class="text-uni-gold text-6xl block mt-2">YES Club?</span></h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl card-hover">
+                    <div class="text-uni-gold mb-6"><i data-lucide="trending-up" class="w-10 h-10"></i></div>
+                    <h3 class="font-bold text-xl mb-3 text-uni-gold">Leadership</h3>
+                    <p class="text-emerald-100/70 text-sm">Develop project management skills that go beyond the blackboard.</p>
+                </div>
+                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl card-hover">
+                    <div class="text-uni-gold mb-6"><i data-lucide="users" class="w-10 h-10"></i></div>
+                    <h3 class="font-bold text-xl mb-3 text-uni-gold">Networking</h3>
+                    <p class="text-emerald-100/70 text-sm">Connect with alumni who are now leading in top schools nationwide.</p>
+                </div>
+                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl card-hover">
+                    <div class="text-uni-gold mb-6"><i data-lucide="presentation" class="w-10 h-10"></i></div>
+                    <h3 class="font-bold text-xl mb-3 text-uni-gold">Experience</h3>
+                    <p class="text-emerald-100/70 text-sm">Real-world teaching practicums before you even reach your senior year.</p>
+                </div>
+                <div class="p-8 bg-white/5 border border-white/10 rounded-2xl card-hover">
+                    <div class="text-uni-gold mb-6"><i data-lucide="map-pin" class="w-10 h-10"></i></div>
+                    <h3 class="font-bold text-xl mb-3 text-uni-gold">Outreach</h3>
+                    <p class="text-emerald-100/70 text-sm">Participate in community service that brings education to remote areas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="programs" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-4xl font-bold text-uni-green text-center mb-16">Signature Programs</h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <!-- CARD 1 -->
+            <div class="rounded-2xl overflow-hidden shadow-xl bg-white border border-gray-100">
+                <img src="Assets/Images/1.jpg"
+                     class="w-full h-48 object-cover cursor-pointer hover:scale-105 transition"
+                     onclick="openModal(this.src)">
+                <div class="p-6">
+                    <span class="text-uni-green font-bold text-xs uppercase">Practicum</span>
+                    <h3 class="text-xl font-bold my-2">Community Outreach in Action</h3>
+                    <p class="text-gray-500 text-sm">Members of the Young Educators Society Club actively engage in an outreach program.</p>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="rounded-2xl overflow-hidden shadow-xl bg-white border border-gray-100">
+                <img src="Assets/Images/2.jpg"
+                     class="w-full h-48 object-cover cursor-pointer hover:scale-105 transition"
+                     onclick="openModal(this.src)">
+                <div class="p-6">
+                    <span class="text-uni-green font-bold text-xs uppercase">Workshops</span>
+                    <h3 class="text-xl font-bold my-2">YES Club Official Poster</h3>
+                    <p class="text-gray-500 text-sm">Official poster of the YES Club.</p>
+                </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="rounded-2xl overflow-hidden shadow-xl bg-white border border-gray-100">
+                <img src="Assets/Images/3.jpg"
+                     class="w-full h-48 object-cover cursor-pointer hover:scale-105 transition"
+                     onclick="openModal(this.src)">
+                <div class="p-6">
+                    <span class="text-uni-green font-bold text-xs uppercase">Outreach</span>
+                    <h3 class="text-xl font-bold my-2">YES Club Members Giving Back</h3>
+                    <p class="text-gray-500 text-sm">Service and community engagement.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+    <section class="py-20 bg-uni-gold relative">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-black text-uni-green mb-6">Ready to Shape the Future?</h2>
+            <p class="text-uni-green/80 text-xl mb-10 max-w-2xl mx-auto font-medium">Join us in making a difference today. Applications for the 2026 Academic Year are now open!</p>
+            <a href="#apply" class="bg-uni-green text-uni-gold px-12 py-5 rounded-2xl font-black text-xl hover:scale-105 transition shadow-2xl uppercase tracking-widest">Join the Society</a>
+        </div>
+    </section>
+
+        <section id="apply" class="py-24 bg-gray-50">
+        <div class="max-w-2xl mx-auto px-4">
+            <div class="bg-white rounded-3xl shadow-2xl p-10 md:p-16 border-t-8 border-uni-gold">
+
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-uni-green">Join the Club</h2>
+                    <p class="text-gray-500 mt-2">Fill out the details below and we'll reach out!</p>
+                </div>
+
+                <!-- FORM -->
+                <form id="applyForm" class="space-y-6">
+
+                    <div>
+                        <label class="block text-sm font-bold text-uni-green uppercase mb-2">Name</label>
+                        <input type="text" name="name"
+                            class="w-full px-5 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-uni-green outline-none bg-gray-50"
+                            placeholder="Your Full Name" required>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-uni-green uppercase mb-2">Email</label>
+                            <input type="email" name="email"
+                                class="w-full px-5 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-uni-green outline-none bg-gray-50"
+                                placeholder="student@university.edu" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-uni-green uppercase mb-2">Course</label>
+                            <input type="text" name="course"
+                                class="w-full px-5 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-uni-green outline-none bg-gray-50"
+                                placeholder="BS Education" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-uni-green uppercase mb-2">Why join YES?</label>
+                        <textarea name="message"
+                            class="w-full px-5 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-uni-green outline-none bg-gray-50 h-32"
+                            placeholder="Tell us about your passion..." required></textarea>
+                    </div>
+
+                    <input type="hidden" name="time" id="apply_time">
+
+                    <button type="submit"
+                        class="w-full bg-uni-green text-uni-gold py-5 rounded-xl font-bold text-xl hover:opacity-90 transition shadow-lg">
+                        Submit Application
+                    </button>
+
+                    <p id="apply_status" class="text-center text-sm mt-3 hidden"></p>
+
+                </form>
+
+            </div>
+        </div>
+</section>
+
+    <footer class="bg-uni-green text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-8 md:mb-0">
+                <div class="flex items-center gap-2 mb-4">
+                    <i data-lucide="graduation-cap" class="text-uni-gold"></i>
+                    <span class="text-2xl font-bold tracking-tighter">YES CLUB</span>
+                </div>
+                <p class="text-emerald-100/60 max-w-xs italic text-sm">Building the foundation of education since 2021.</p>
+            </div>
+            <div class="flex gap-12">
+                <div>
+                    <h4 class="font-bold text-uni-gold mb-4 uppercase text-xs tracking-widest">Connect</h4>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/ndmuyesclub19" class="hover:text-uni-gold transition"><i data-lucide="facebook"></i></a>
+                        <a href="mailto:youngeducatorssocietyclub@gmail.com" class="hover:text-uni-gold transition"><i data-lucide="mail"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-uni-gold mb-4 uppercase text-xs tracking-widest">Address</h4>
+                    <p class="text-emerald-100/60 text-sm">Education Bldg<br>Notre Dame of Marbel University</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-16 pt-8 border-t border-white/5 text-emerald-100/40 text-xs">
+                <p>&copy; 2026 Young Educators' Club. All Rights Reserved.</p>
+
+                <!-- BUILT BY BADGE -->
+                <div class="mt-4 flex justify-center">
+                    <a href="https://tuazon-onlineportfolio.vercel.app" target="_blank"
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full 
+                            bg-white/10 border border-white/20 backdrop-blur-md
+                            text-emerald-100/70 text-xs font-medium
+                            hover:bg-uni-gold hover:text-uni-green hover:scale-105
+                            transition-all duration-300 shadow-lg">
+                        
+                        <!-- optional icon -->
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+
+                        Built by <span class="font-bold">Fritz Tuazon</span>
+                    </a>
+                </div>
+            </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+    // INIT EMAILJS
+    (function () {
+        emailjs.init("r8V93aOMcYW4TLen7"); // your public key
+    })();
+
+    // SET TIME
+    document.getElementById("apply_time").value = new Date().toLocaleString();
+
+    // FORM SUBMIT
+    document.getElementById("applyForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const status = document.getElementById("apply_status");
+        status.classList.remove("hidden");
+        status.textContent = "Sending...";
+        status.className = "text-center text-sm mt-3 text-gray-500";
+
+        emailjs.sendForm(
+            "service_l1irorg",     // your service ID
+            "template_50jlg0k",    // your template ID
+            this
+        )
+        .then(() => {
+            status.textContent = "Application sent successfully!";
+            status.className = "text-center text-sm mt-3 text-green-600 font-semibold";
+
+            this.reset();
+            document.getElementById("apply_time").value = new Date().toLocaleString();
+        })
+        .catch((error) => {
+            console.log(error);
+            status.textContent = "Failed to send. Please try again.";
+            status.className = "text-center text-sm mt-3 text-red-500 font-semibold";
+        });
+    });
 </script>
 
+<script>
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+
+    function openModal(src) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        modalImg.src = src;
+    }
+
+    function closeModal() {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+    }
+
+    // Close when clicking outside image
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+</script>
+
+
+<script>
+    lucide.createIcons();
+</script>
+
+<!-- IMAGE MODAL -->
+<div id="imageModal"
+     class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+
+    <!-- CLOSE BUTTON -->
+    <span class="absolute top-6 right-6 text-white text-3xl cursor-pointer"
+          onclick="closeModal()">×</span>
+
+    <!-- IMAGE -->
+    <img id="modalImg"
+         class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl border border-white/20">
+</div>
 </body>
 </html>
